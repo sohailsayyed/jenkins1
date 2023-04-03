@@ -18,8 +18,8 @@ pipeline {
 
 					sh 'docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) public.ecr.aws/l7p5p7u0'
 					sh 'docker build -t test-repo .'
-					sh 'docker tag test-repo:latest public.ecr.aws/l7p5p7u0/test-repo:latest'
-					sh 'docker push public.ecr.aws/l7p5p7u0/test-repo:latest'
+					sh 'docker tag test-repo:latest ""$BUILD_ID""'
+					sh 'docker push public.ecr.aws/l7p5p7u0/test-repo:""BUILD_ID""'
 
 
 				}
