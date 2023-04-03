@@ -10,7 +10,7 @@ pipeline {
 			}
 		}
 
-		stage (''Publish ECR) {
+		stage ('Publish ECR') {
 
 			steps {
 
