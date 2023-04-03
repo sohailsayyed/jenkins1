@@ -12,15 +12,7 @@ pipeline {
     }
 
     stages {
-        stage ('Build Docker Image') {
-            when {
-                 anyOf {
-                    expression { env.BRANCH_NAME == "main" }
-                    expression { env.BRANCH_NAME == ~"feature" }
-                    expression { env.BRANCH_NAME == "develop" }
-                    expression { env.BRANCH_NAME ==~ "release" }
-                }
-            }
+        stage ('Build Docker Image') {    
         
         steps {
             script {
