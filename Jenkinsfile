@@ -12,22 +12,14 @@ pipeline {
     }
 
     stages {
-        stage ('Build Docker Image') {    
-        
-        steps {
-            script {
-                    sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} ."
-                }
-            }
-        }
         
         stage('Logging & into AWS ECR') {
             steps {
                 script {
-                    sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/l7p5p7u0"
-                    sh "docker build -t test-repo ."
-                    sh "docker tag test-repo:latest public.ecr.aws/l7p5p7u0/test-repo:latest"
-                    sh "docker push public.ecr.aws/l7p5p7u0/test-repo:latest"
+                    sh "sudo aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/l7p5p7u0"
+                    sh "sudo docker build -t test-repo ."
+                    sh "sudo docker tag test-repo:latest public.ecr.aws/l7p5p7u0/test-repo:latest"
+                    sh "sudo docker push public.ecr.aws/l7p5p7u0/test-repo:latest"
 
                 }
             }
@@ -36,7 +28,7 @@ pipeline {
         stage('Deploy to Fargate') {
             steps {
                 script {
-                    sh "aws ecs update-service --cluster  my-nginx-cluster --service my-service --task-definition my-task-defination:2 --region ap-south-1 --force-new-deployment"
+                    sh "sudo aws ecs update-service --cluster  my-nginx-cluster --service my-service --task-definition my-task-defination:2 --region ap-south-1 --force-new-deployment"
                 }
             }
         }
