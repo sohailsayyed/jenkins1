@@ -30,8 +30,7 @@ pipeline {
             steps {
                 
                 echo "${env.BRANCH_NAME}"
-                sh 'npm install'
-                sh 'npm run build'
+                echo "!!!!!!!!!!!!!!@@@@@@@@@@@@Started>>>>>>>>>>>>>!!!!!!!!!!!!!!!!!!!"
                
             }
             
