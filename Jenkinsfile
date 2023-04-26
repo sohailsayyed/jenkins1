@@ -22,7 +22,7 @@ pipeline {
                 anyOf{
                     expression { env.BRANCH_NAME == "develop" }
                     expression { env.BRANCH_NAME == "main" }
-                    //expression { env.BRANCH_NAME.startsWith("release/") }
+                    expression { env.BRANCH_NAME.startsWith("release/") }
                          
                 }
             }
@@ -30,7 +30,8 @@ pipeline {
             steps {
                 
                 echo "${env.BRANCH_NAME}"
-                echo "Starting"
+                sh 'npm install'
+                sh 'npm run build'
                
             }
             
@@ -43,17 +44,31 @@ pipeline {
 
                     expression { env.BRANCH_NAME == "develop" }
                     expression { env.BRANCH_NAME == "main" }
-                    //expression { env.BRANCH_NAME.startsWith("release/") }
+                    expression { env.BRANCH_NAME.startsWith("release/") }
                 }
             }
 
             steps {
 
+                script {
+
+                    if (env.BRANCH_NAME == 'develop') {
+                        sh 'pwd'
+                        sh 'aws s3 sync . s3://test.spchavan.link/'
+                        //aws cloudfront create-invalidation --distribution-id E2EJJPGYAV8659 --paths /*  
+                    }
                 
-                    sh 'pwd'
-                    sh 'aws s3 sync . s3://test.spchavan.link/'
-                    sh 'aws cloudfront create-invalidation --distribution-id E2H7O15KPBNKNS --paths /var/lib/jenkins/workspace/Frontend/*'  
-               
+                    else (env.BRANCH_NAME == 'main') {
+                        sh 'pwd'
+                        sh 'aws s3 sync . s3://help.spchavan.link/'
+                        //aws cloudfront create-invalidation --distribution-id E84HX4RZRQNW3 --paths /*
+    
+                    }
+                 
+
+                }
+
+                
                 
                 echo "+++Upload Successful+++"
             }
@@ -61,6 +76,3 @@ pipeline {
   
     }
 }
-
-
-
