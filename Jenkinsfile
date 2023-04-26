@@ -49,18 +49,11 @@ pipeline {
 
             steps {
 
-                if (env.BRANCH_NAME == 'develop') {
+                
                     sh 'pwd'
                     sh 'aws s3 sync build/ s3://test.spchavan.link/'
                     //aws cloudfront create-invalidation --distribution-id E2H7O15KPBNKNS --paths /*  
-                }
-                
-                else (env.BRANCH_NAME == 'main') {
-                    sh 'pwd'
-                    sh 'aws s3 sync build/ s3://help.spchavan.link/'
-                   // aws cloudfront create-invalidation --distribution-id E15K5NAMM80YAM --paths /*
-
-                } 
+               
                 
                 echo "+++Upload Successful+++"
             }
