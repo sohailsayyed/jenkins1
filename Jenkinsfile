@@ -52,7 +52,7 @@ pipeline {
                 
                     sh 'pwd'
                     sh 'aws s3 sync . s3://test.spchavan.link/'
-                    sh 'aws cloudfront create-invalidation --distribution-id E2H7O15KPBNKNS --paths /*'  
+                    sh 'aws cloudfront create-invalidation --distribution-id E2H7O15KPBNKNS --paths /var/lib/jenkins/workspace/Frontend/*'  
                
                 
                 echo "+++Upload Successful+++"
